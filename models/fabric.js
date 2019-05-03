@@ -1,5 +1,6 @@
 var fabricClient = require('fabric-client')
 
+/*
 //创建一个Client
 fabricClient.newDefaultKeyValueStore({ path: '/tmp/xx/' }).then((state_store) => {
     client = new fabricClient();
@@ -48,12 +49,13 @@ fabricClient.newDefaultKeyValueStore({ path: '/tmp/xx/' }).then((state_store) =>
 }).then((response)=>{
     console.log('Response is', response.toString());
 });
-
+*/
 
 exports.register = (name, password) => {
-    if(name);
-    if(checkPasswd(password).match(/\d+/g));
-}
-exports.login = {}
-exports.balance = {}
-exports.high = {}
+  //if(name);
+  return key = 'hairong';
+};
+
+//exports.login = {}
+//exports.balance = {}
+//exports.high = {}
