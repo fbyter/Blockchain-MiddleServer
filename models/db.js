@@ -1,11 +1,11 @@
-var mysql = require('mysql')
+const mysql = require('mysql')
 
-var dbConf = require('../conf/db.json');
+const dbConf = require('../conf/db');
 //var fs = require('fs')
 //var dbConfig = JSON.parse(fs.readFileSync('../conf/db.json').toString());
 
 //set mysql connection pool
-var pool = mysql.createPool({
+const pool = mysql.createPool({
   host: dbConf.host,
   user: dbConf.user,
   password: dbConf.password,

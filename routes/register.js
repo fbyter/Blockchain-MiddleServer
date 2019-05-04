@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
 //var bodyParser = require('body-Parser')
-var fabric = require('../models/fabric');
-var db = require('../models/db');
+const fabric = require('../models/fabric');
+const db = require('../models/db');
 
 //check password is illegal
-var checkPasswd = (password = '') => {
+checkPasswd = (password = '') => {
   let regExist = /(?=.*\d)(?=.*[a-z])(?=.*[`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|])/i;
   let regNum = /^[0-9a-z`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|]{6,12}$/i;
   let regIllegal = /^[^0-9a-z`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|]$/i;
@@ -22,7 +22,7 @@ var checkPasswd = (password = '') => {
 
 //register a user from fabric
 //if name is null, transform to ''
-var registerUser = (name='', password='', callback) => {
+registerUser = (name='', password='', callback) => {
   let status = '', msg = '', key = '';
   if(name === '') {
     status = 'error';

@@ -1,0 +1,27 @@
+{
+  "ip": "127.0.0.1",
+  "channel": {
+    "name": "mychannel"
+  },
+  "peer": {
+    "ip": "127.0.0.1",
+    "port": "2801",
+    "protocol": "grpc"
+  },
+  "order": {
+    "ip": "127.0.0.1",
+    "port": "2800",
+    "protocol": "grpc"
+  },
+  "ca": {
+    "ip": "127.0.0.1",
+    "port": "2804",
+    "protocol": "http"
+  },
+  "protocol": "grpc",
+  "store_path": "conf/key-store",
+  "tlsOptions": {
+    "trustedRoots": [],
+    "verify": false
+  }
+}
