@@ -1,27 +1,45 @@
 {
-  "ip": "127.0.0.1",
-  "channel": {
-    "name": "mychannel"
-  },
   "peer": {
-    "ip": "127.0.0.1",
-    "port": "2801",
+    "ip": "172.168.170.174",
+    "port": "7051",
     "protocol": "grpc"
   },
   "order": {
-    "ip": "127.0.0.1",
-    "port": "2800",
+    "ip": "172.168.170.174",
+    "port": "7050",
     "protocol": "grpc"
   },
   "ca": {
-    "ip": "127.0.0.1",
-    "port": "2804",
-    "protocol": "http"
-  },
-  "protocol": "grpc",
-  "store_path": "conf/key-store",
-  "tlsOptions": {
+    "ip": "172.168.170.174",
+    "port": "7054",
+    "protocol": "http",
+    "tlsOptions": {
     "trustedRoots": [],
     "verify": false
+    }
+  },
+  "options": {
+    "user_id2": "admin",
+    "user_id": "Admin@org1.example.com",
+    "msp_id": "Org1MSP",
+    "privateKeyFolder": "conf/fabric-resource/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+    "signedCert": "conf/fabric-resource/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem",
+    "tls_cacerts": "conf/fabric-resource/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt",
+    "server_hostname": "peer0.org1.example.com"
+  },
+
+  "ip": "120.79.90.241",
+  "ip2": "10.11.23.190",
+  "ip3": "172.168.170.174",
+  "store_path": "conf/fabric-resource/hfc-key-store",
+  "channel_id": "mychannel",
+  "chaincode_id": "chaincode7",
+
+  "invoke": {
+    "pay": "payment",
+    "query": "queryUTXOByUser",
+    "tran": "coinTransaction",
+    "storeKey": "storePubKey",
+    "getKey": "getPubkey"
   }
 }

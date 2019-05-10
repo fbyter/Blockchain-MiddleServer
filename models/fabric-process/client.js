@@ -8,41 +8,43 @@ const fs = require('fs');
 const rootPath = require('../conf/dirname').rootPath;
 
 
-//some important parameters
+/* some important parameters */
 const ip = fabric_conf.ip;
 let options = fabric_conf.options;
+options.privateKeyFolder = path.join(rootPath, options.privateKeyFolder);
+options.signedCert = path.join(rootPath, options.signedCert);
+//console.log(options.signedCert);
 
-//new a fabric-process client
+/* new a fabric-process client */
 let fabric_client = new Fabric_Client();
 let fabric_ca_client = null;
+let channel = null;
+let peer = null;
+let order = null;
 
-//create channel,peer,order objects
-let channel = fabric_client.newChannel(fabric_conf.channel_id);
-let peer = fabric_client.newPeer(getUrl(fabric_conf.peer));
-let order = fabric_client.newPeer(getUrl(fabric_conf.order));
-channel.addPeer(peer);
-channel.addOrderer(order);
-
-//other parameters
+/* other parameters */
 let admin_user = null;
+let result = null;
 let tx_id = null;
-let store_path = path.join(rootPath, fabric_conf.store_path);
-let jsonPath = {path: store_path};
-console.log(store_path);
+const store_path = path.join(rootPath, fabric_conf.store_path);
+const jsonPath = {path: store_path};
+//console.log(store_path);
 
-/* connect to fabric network and set admin  as client's id */
+/* connect to fabric network and set admin as client's id */
 exports.initialization = () => {
   //key and certificate of admin
   let createUserOpt = {
     username : options.user_id,
     mspid : options.msp_id,
     cryptoContent : {
-      privateKey : getKeyFilesInDir(options.privateKeyFolder)[0],
-      //privateKeyPEM: ,
-      signedCert : options.signedCert
+      //privateKey : getKeyFilesInDir(privateKeyFolder)[0],
+      //signedCert : options.signedCert
+      privateKeyPEM: fs.readFileSync(getKeyFilesInDir(options.privateKeyFolder)[0], 'utf-8'),
+      signedCertPEM: fs.readFileSync(options.signedCert, 'utf-8')
     },
     skipPersistence: true
   };
+  //console.log(createUserOpt.cryptoContent.privateKey.toString() + "\n\n" + createUserOpt.cryptoContent.signedCert.toString());
 
   //
   Fabric_Client.newDefaultKeyValueStore(jsonPath).then(state_store => {
@@ -51,13 +53,66 @@ exports.initialization = () => {
 
     //create user admin
     fabric_client.createUser(createUserOpt).then(user => {
-      //assign admin to client
       admin_user = user;
-      fabric_client.setUserContext(user, true).catch(err => {
+      console.log('successful create user for fabric client: ' + user.getName() + '\n');
+
+      //assign admin to client
+      fabric_client.setUserContext(user, true).then(()=> {
+        //create channel,peer,order objects
+        channel = fabric_client.newChannel(fabric_conf.channel_id);
+        peer = fabric_client.newPeer(getUrl(fabric_conf.peer));
+        order = fabric_client.newPeer(getUrl(fabric_conf.order));
+        channel.addPeer(peer);
+        channel.addOrderer(order);
+        //console.log(channel.getOrderers().toString());
+        //console.log(channel.getPeers().toString())
+
+      }).catch(err => {
         console.error('Failed to enroll and persist admin. Error: ' + err.stack ? err.stack : err);
-        throw new Error('Failed to enroll admin')
+        throw new Error('Failed to setUserContext')
       });
+    }).catch(err => {
+      console.error('Failed to create and persist admin. Error: ' + err.stack ? err.stack : err);
+      throw new Error('Failed to createUser admin')
     });
+  })
+
+};
+
+exports.queryByChaincode = (fcn, args) => {
+  let request = {
+    chaincodeId: fabric_conf.chaincode_id,
+    //fcn: fcn,
+    fcn: "getPubKey",
+    //args: args
+    args: ['test']
+  };
+
+  // send the query proposal to the peer
+  return channel.queryByChaincode(request).then((query_responses) => {
+    //typeof query_responses is object(json)
+    console.log("Query has completed, checking results");
+
+    if(query_responses['code'] === "success") console.log("fuck");
+    else console.log("shit");
+    result = query_responses;
+
+    for(let key in result) {
+      console.log(result[key]);
+    }
+
+    /*if (query_responses && query_responses.length === 1) {
+      if (query_responses[0] instanceof Error) {
+        console.error("error from query = ", query_responses[0]);
+      } else {
+        console.log("Response is ", query_responses[0].toString());
+      }
+
+    } else {
+      console.log("No payloads were returned from query");
+    }*/
+  }).catch(err => {
+    console.log('query, error')
   })
 
 };
@@ -109,35 +164,6 @@ exports.enroll = () =>{
   });
 };
 
-exports.query = () => {
-  const request = {
-    //targets : --- letting this default to the peers assigned to the channel
-    chaincodeId: fabric_conf.chaincode_id,
-    fcn: 'queryUTXOsByUser',
-    args: ['test']
-  };
-
-  // send the query proposal to the peer
-  return channel.queryByChaincode(request).then((query_responses) => {
-    console.log("Query has completed, checking results");
-    // query_responses could have more than one  results if there multiple peers were used as targets
-    if(query_responses.get('code') === "success") console.log("fuck");
-    else console.log("shit");
-    /*if (query_responses && query_responses.length === 1) {
-      if (query_responses[0] instanceof Error) {
-        console.error("error from query = ", query_responses[0]);
-      } else {
-        console.log("Response is ", query_responses[0].toString());
-      }
-
-    } else {
-      console.log("No payloads were returned from query");
-    }*/
-  }).catch(err => {
-    console.log('query, error')
-  })
-};
-
 function getKeyFilesInDir(dir) {
   let files = fs.readdirSync(dir);
   let keyFiles = [];
@@ -155,9 +181,13 @@ function getUrl(json) {
   return json.protocol+'://'+ip+':'+json.port
 }
 
+function fuck(i) {
+  return `!!!---fuck#${i.toString()}---!!!`;
+}
+
 //console.log('start:'+admin_user.getName());
-exports.start();
-//exports.query();
+//exports.initialization();
+//exports.queryByChaincode();
 //exports.login = {}
 //exports.balance = {}
 //exports.high = {}
