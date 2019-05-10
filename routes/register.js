@@ -7,7 +7,7 @@ const db = require('../models/db');
 
 const dbOpt = fabric.dbOpt;
 
-//check password is illegal
+/* check password is or not illegal */
 const checkPasswd = (password = '') => {
   let regExist = /(?=.*\d)(?=.*[a-z])(?=.*[`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|])/i;
   let regNum = /^[0-9a-z`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|]{6,12}$/i;
@@ -23,8 +23,7 @@ const checkPasswd = (password = '') => {
   return flag
 };
 
-//register a user from fabric-process
-//if name is null, transform to ''
+/* register a user from fabric-process and db */
 const registerUser = async (body) => {
   const name = body.name;
   //console.log(name.toString());
@@ -33,6 +32,7 @@ const registerUser = async (body) => {
   const isPhone = body.key ? body.key : '';
 
   let status = 'error', msg = '---origin message---';
+
   if(!name)
     msg = 'illegal name!';
   else if(!checkPasswd(password))
@@ -81,11 +81,10 @@ const registerUser = async (body) => {
   }
 
   return new Promise((resolve,reject) => resolve({ status: status, msg: msg }))
-
   //callback && callback({status: status, msg: msg});
 };
 
-/* GET home page. */
+/* GET register msg. */
 router.post('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
   registerUser(req.body).then( result => {

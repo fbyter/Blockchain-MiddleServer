@@ -7,6 +7,7 @@
   "sql": {
     "insert": "INSERT INTO `WalletUser` (`name`,`password`,`key`,`email`) VALUES(?,?,?,?)",
     "select": "select field from WalletUser where name = ?",
+    "selectAll": "select field from WalletUser",
     "update": "UPDATE WalletUser SET filed = ? WHERE name = ?"
   }
 }

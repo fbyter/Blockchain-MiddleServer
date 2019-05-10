@@ -95,14 +95,22 @@ exports.insertOne = async (args) => {
   //return res;
 };
 
-exports.getPasswd = async (name) => {
-  let checkResult = '';
+exports.getUserMsg = async (name) => {
   let what = '*';
   let [result, fields] = await query("select", what, [name]);
   //console.log(result, fields, result[0]);
-  if(result.length !== 0) //该用户已被注册
-    checkResult = result['password'];
-  return new Promise((resolve, reject) => { resolve(checkResult) })
+  //result是数组, result[0]是 RowDataPacket{name:'a',password:'b',key:'c',email:'d'}
+  /*if(result.length !== 0) //该用户已被注册
+  checkResult = result[0]['password'];*/
+  return new Promise((resolve, reject) => { resolve(result[0]) })
+};
+
+exports.getAllUsers = async () => {
+  let what = 'name';
+  let [result, fields] = await query("selectAll", what, []);
+  //console.log(result, typeof result);
+  //result是数组, [{name:'1'},{name:'2'} ...]
+  return new Promise(((resolve, reject) => { resolve(result) }))
 };
 
 const getSql = (opt, field) => {
@@ -113,6 +121,9 @@ const getSql = (opt, field) => {
       break;
     case 'select':
       sql = dbConf.sql.select;
+      break;
+    case 'selectAll':
+      sql = dbConf.sql.selectAll;
       break;
     case 'update':
       sql = dbConf.sql.update;
