@@ -1,42 +1,54 @@
 'use strict';
-const client = require('./client');
+const client = require('./fabricClient');
 const fabric_conf = require('../conf/fabric');
 const keyPair = require('../keyPair');
+const request = require('../request');
 
+/* register is create keyPair; storePubKey and return privateKey*/
 exports.register = (name) => {
-  return new Promise(function (resolve, reject) {
+  return new Promise(async (resolve, reject) => {
     //create public/private key
     let flag = false;
-    let keys = keyPair.createKey();
+    let keyPairs = keyPair.createKey();
+    let response = null;
 
     //store public key for user $name
     let msg = {
       user: name,
-      pubkey: `-----BEGIN PUBLIC KEY-----\n${keys.public}\n-----END PUBLIC KEY-----`
+      pubkey: "-----BEGIN PUBLIC KEY-----\n" + keyPairs.public + "\n-----END PUBLIC KEY-----"
     };
     let fcn = fabric_conf.invoke.storeKey;
+    let args = [JSON.stringify(msg)];
 
-    /*
-    client.queryByChaincode(fcn, JSON.stringify(msg)).then(result => {
-      if(result.get("code") === "success")
+    //nodejs sdk storePubKey function has serious bug!
+    /*await client.queryByChaincode(fcn, args).then(result => {
+      let result0 = result[0];
+      let keys = Object.keys(result0);
+      if(keys.includes('code')) {
+        response = {
+          code: result0['code'],
+          msg: result0['details']
+        };
+      }
+      else {
+        flag = true;
+        response = {
+          key: keyPairs.private
+        }
+      }
+    });*/
+
+    //so we use java web server to storePubKey
+    response = await request.post('register', {name:name}).then((response) => {
       flag = true;
+      return response
     });
-    */
-    flag = true;
 
-    if(flag) resolve(keys.private);
-    else reject(flag)
+    //console.log('xxx',response);
+    if (flag) resolve(response);
+    else reject(response)
 
   });
-
-  //send pubkey to fabric-resource chaincode
-  /*resultMap = fabric-resource.chaincode2.invoke("storePubKey", formatArgs(msg));
-  if (resultMap.get("code").equals("success")) {
-    log.debug("store public key success");
-    pukToUser.put(PUK, userName);
-    return keys.private;
-  }
-  else return null;*/
 
   //return keys.private;
 };

@@ -1,0 +1,173 @@
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    color: #fff;
+    /*background-color: #24292e;*/
+    background-color: rgba(36,41,46,0.95);
+    margin:0;
+    padding:0;
+}
+#div_topMenu{
+    width:100%;
+    height:40px;
+    padding:16px 0;
+    background-color: #24292e;
+}
+#div_top{
+    position:relative;
+    margin:0 auto;
+    width:980px;
+    height:36px;
+}
+#img_icon{
+    height:32px;
+    float:left;
+}
+#input_search{
+    box-sizing: border-box;
+    border:0;
+    padding: 3px 8px;
+    height:30px;
+    width:300px;
+    background-color:hsla(0,0%,100%,0.125);
+    font-size: 13px;
+    color: inherit;
+    position: absolute;
+    top:5px;
+    left:530px;
+    border-radius:3px;
+}
+#img_search{
+    position: absolute;
+    top:5px;
+    left:800px;
+}
+#ul_top{
+    list-style:none;
+    float:left;
+    margin-top:10px;
+    margin-left:15px;
+    padding:0;
+}
+.li_top{
+    float:left;
+    color: white;
+    font-size:16px;
+    margin:0 10px;
+    font-weight: 500;
+}
+.span_white{
+    color:white;
+    float:right;
+    font-size:17px;
+    line-height:40px;
+}
+#div_mainContainer{
+    background-image:url(/images/back.png);
+    height:473.4px;
+    width:100%;
+    background-size:cover;
+    padding:64px 0;
+
+}
+h1{
+    color:white;
+    font-size:64px;
+    font-weight: 500;
+    line-height:60px;
+    margin-top:100px;
+}
+#div_main{
+    width:980px;
+    height:473.4px;
+    margin:0 auto;
+    position:relative;
+}
+#p_main{
+    color:hsla(0,0%,100%,0.6);
+    height:124.8px;
+    width:540px;
+    font-size: 21px;
+    line-height: 1.5;
+}
+.a_white{
+    color:white;
+    border-bottom: 1px solid hsla(0,0%,100%,0.125);
+    text-align: left;
+}
+#div_sign{
+    height:425.4px;
+    width:332.325px;
+    padding:24px;
+    background-color:#fafbfc;
+    float:right;
+    position:absolute;
+    right:0px;
+    top:-100px;
+    color:#586069;
+    border-radius: 3px
+}
+.input_sign{
+    color: #000;
+    font-size: 16px;
+    width:310.325px;
+    height:24px;
+    padding:10px;
+    border: 1px solid #d1d5da;
+    border-radius: 3px
+}
+input::-webkit-input-placeholder{
+    font-size:16px;
+    color:#bbbbbb;
+}
+#p_little{
+    font-size: 12px;
+    color: #6a737d;
+    margin:0;
+}
+#input_ok{
+    height:64px;
+    width:328.325px;
+    padding:20px 32px;
+    color:white;
+    font-size:20px;
+    -webkit-appearance:none;
+    background-color:#2ebc4f;
+    border:0;
+}
+.p_sign{
+    margin:7px 0;
+}
+#p_sign_last{
+    font-size: 12px;
+    color: #6a737d;
+    margin:0;
+    text-align:center;
+}
+.a_sign{
+    color: #0366d6;
+}
+#div_bottomContainer{
+    /*background-image:url(/images/back2.png);*/
+    background-size:cover;
+    height:83.6px;
+    width:100%;
+    padding:40px 0;
+}
+#div_bottom{
+    width:980px;
+    margin:0 auto;
+    height:83.6px;
+}
+#p_bottom{
+    width:650px;
+    color:white;
+    font-size:16px;
+    margin:0;
+}
+#span_bottom{
+    color: #79b8ff;
+    font-size:18px;
+    margin-top:20px;
+}

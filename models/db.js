@@ -61,19 +61,6 @@ const query = (opt, field, args) => {
 
 exports.query = query;
 
-/*exports.isExist = async (name) => {
-  let isExist = false;
-  let what = 'count(*)';
-  let [result, fields] = await query("select", what, [name]);
-  //console.log(result, fields, result[0], typeof result[0][what]);
-  if(result[0][what] === 1) isExist = true;
-
-  return new Promise((resolve, reject) => {
-    resolve(isExist)
-  })
-  //return true;
-};*/
-
 exports.isExist = async (name) => {
   let isExist = false;
   let what = 'count(*)';
@@ -95,13 +82,15 @@ exports.insertOne = async (args) => {
   //return res;
 };
 
-exports.getUserMsg = async (name) => {
-  let what = '*';
+exports.getUserMsg = async (name, whats="all") => {
+  let what;
+  if(whats === "all")
+    what = '*';
+  else
+    what = whats;
   let [result, fields] = await query("select", what, [name]);
   //console.log(result, fields, result[0]);
   //result是数组, result[0]是 RowDataPacket{name:'a',password:'b',key:'c',email:'d'}
-  /*if(result.length !== 0) //该用户已被注册
-  checkResult = result[0]['password'];*/
   return new Promise((resolve, reject) => { resolve(result[0]) })
 };
 

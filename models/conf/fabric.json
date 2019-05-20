@@ -33,13 +33,25 @@
   "ip3": "172.168.170.174",
   "store_path": "conf/fabric-resource/hfc-key-store",
   "channel_id": "mychannel",
-  "chaincode_id": "chaincode7",
+  "chaincode_id": "chaincode2",
+  "coinPrivateKey": "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCR+1+S2rEAgMZ5ac4I+tAT6TyhPljhuPoHzFV90XZLXg==",
 
   "invoke": {
     "pay": "payment",
-    "query": "queryUTXOByUser",
-    "tran": "coinTransaction",
+    "query": "queryUTXOsByUser",
+    "coin": "coinTransaction",
     "storeKey": "storePubKey",
-    "getKey": "getPubkey"
+    "getKey": "getPubKey",
+    "queryid": "queryUTXOsByTxid"
+  },
+  "payment": {
+    "payMethod" : "p2pk",
+    "means": "",
+    "label": "1",
+    "COIN_PRIVATE": "MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCR+1+S2rEAgMZ5ac4I+tAT6TyhPljhuPoHzFV90XZLXg=="
+  },
+  "Tongz": {
+    "url1": "22.20.105.243:7777",
+    "url": "127.0.0.1:7777"
   }
 }

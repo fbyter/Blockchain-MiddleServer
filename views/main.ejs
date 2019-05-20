@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BlockChain-Wallet</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.90so.net/layui/2.4.5/css/layui.css" rel="stylesheet" type="text/css"/>
+    <link href="stylesheets/main.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="images/bitcoin.jpeg" type="image/x-icon" />
+</head>
+<body>
+<div id="div_topMenu">
+    <div id="div_top">
+        <img src="images/bitcoin.jpeg" id="img_icon"></img>
+        <input id="input_search" type="text" placeholder="Search or jump to…"></input>
+        <img id="img_search" src="images/GoogleWebSearch32.png"></img>
+        <ul id="ul_top">
+            <li class="li_top">Pull requests</li>
+            <li class="li_top"> Issues</li>
+            <li class="li_top">Marketplace</li>
+            <li class="li_top"> Explore</li>
+        </ul>
+        <img id="img_sanjiao"  src="sanjiao.png"></img>
+        <img id="img_game" class="img_top" src="game.png"></img>
+        <img id="img_sanjiao"  src="sanjiao.png"></img>
+        <img id="img_plus" class="img_top" src="plus.jpg"></img>
+        <img id="img_ding" class="img_top" src="ding.png"></img>
+    </div>
+</div>
+<div id="div_headContainer">
+    <div id="div_head">
+        <h2 id="h2_head">BlockChain Wallet, safer and more transparent.</h2>
+        <p id="p_head">
+            Using the wallet, Experience.
+        </p>
+        <button id="button_coin" class="button">Coin</button>
+        <button id="button_transfer" class="button">Transfer</button>
+    </div>
+</div>
+<div id="div_bodyContainer">
+    <div id="div_left">
+        <div id="div_black">
+            <p id="p_black"><b><br>Workshops at GitHub Universe</b>
+                Register to attend a workshop in San Francisco on October 15
+            </p>
+        </div>
+        <div id="div_white">
+            <p id="p_white">
+                <br>Name: <%= name %>
+                <br>Public key: <%= key %>
+            </p>
+        </div>
+        <div id="div_repositories">
+            <div id="div_repositories_top">
+                <b>Balance</b>
+                <button id="button_refresh_balance">Refresh</button>
+            </div>
+        <div id="balance">Num:</div>
+        </div>
+    </div>
+    <div id="div_mid">
+        <div id="div_mid_top">
+            Browse Blocks
+            <button id="button_refresh_blocks">Refresh</button>
+        </div>
+        <div id="div_mid_bottom">
+            <h3 id="h3_mid_bottom">Discover interesting projects and people to populate your personal news feed.</h3>
+            <p id="p_mid_bottom">Your news feed helps you keep up with recent activity on repositories you watch and people you follow.</p>
+        </div>
+    </div>
+</div>
+<div id="div_tail">
+    <ul id="ul_tail_left">
+        <li class="li_tail_left li_black">© 2019 BC-Wallet.</li>
+        <li class="li_tail_left">Terms</li>
+        <li class="li_tail_left">Privacy</li>
+        <li class="li_tail_left">Security</li>
+        <li class="li_tail_left">Status</li>
+        <li class="li_tail_left">Help</li>
+    </ul>
+
+    <ul id="ul_tail_left">
+        <li class="li_tail_left li_right">About</li>
+        <li class="li_tail_left li_right">Blog</li>
+        <li class="li_tail_left li_right">Training</li>
+        <li class="li_tail_left li_right">API</li>
+        <li class="li_tail_left li_right">Pricing</li>
+        <li class="li_tail_left li_right">Contact BC-Wallet</li>
+    </ul>
+    <img id="img_cat" src="images/bitcoin.jpeg"></cat>
+</div>
+
+<!--- my function --->
+<script type="text/javascript" src="https://cdn.90so.net/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.90so.net/layui/2.4.5/layui.js"></script>
+<script src="https://cdn.90so.net/layui/2.4.5/font/iconfont.woff"></script>
+
+<section hidden>
+    <form id="form_transfer" class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">amount</label>
+            <div class="layui-input-block">
+                <input type="text" name="amount" required  lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">password</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">owner</label>
+            <div class="layui-input-block">
+                <select name="owner" lay-verify="required">
+                    <option value=""></option>
+                    <% for(let i in users) { %>
+                      <option value="<%= users[i] %>"><%= users[i] %></option>
+                    <% } %>
+                </select>
+            </div>
+        </div>
+        <!---
+        <button id="button_transfer_7" style="display: none">refresh</button>
+        --->
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formTransfer">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+    <form id="form_coin" class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">amount</label>
+            <div class="layui-input-block">
+                <input type="text" name="amount" required  lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">password</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">payment</label>
+            <div class="layui-input-block">
+                <input type="radio" name="pay" value="wechat" title="微信">
+                <input type="radio" name="pay" value="alipay" title="支付宝" checked>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formCoin">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+    <p id="name"><%=name%></p>
+</section>
+
+<script type="text/javascript" src="javascripts/main.js"></script>
+
+</body>
+</html>

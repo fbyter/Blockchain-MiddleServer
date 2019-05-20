@@ -18,7 +18,9 @@ async function loginUser(body) {
     status = 'failed';
 
     await db.getUserMsg(name).then(async dbResult => {
-      if(dbResult.password === password) {
+      if(!dbResult)
+        msg = `user ${name} is not exist!`;
+      else if(dbResult.password === password) {
         status = 'success';
         msg = 'login success';
         key = dbResult.key;
@@ -40,8 +42,20 @@ async function loginUser(body) {
 
 /* GET login msg. */
 router.post('/', function(req, res, next) {
-  //res.render('index', { title: 'Express' });
-  loginUser(req.body).then( result => {
+  if((!req.body.name) && (!req.body.password)) res.redirect('https://www.google.com');
+  else loginUser(req.body).then( result => {
+    if(result.status === 'success') {
+      //登录成功, 设置cookie
+      let expiryTime = new Date( Date.now() + 10 * 60 * 1000 );
+      let cookieParam = {
+        domain: 'www.fabricwallet.com',
+        session: true,
+        httpOnly: true,
+        maxAge: 600*1000,
+        path: '/wallet'
+      };
+      //res.cookie("username", req.body.name, cookieParam)
+    }
     res.json(result)
   });
 });

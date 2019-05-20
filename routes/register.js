@@ -5,8 +5,6 @@ const fabric = require('../models/fabric');
 const db = require('../models/db');
 //var bodyParser = require('body-Parser')
 
-const dbOpt = fabric.dbOpt;
-
 /* check password is or not illegal */
 const checkPasswd = (password = '') => {
   let regExist = /(?=.*\d)(?=.*[a-z])(?=.*[`~!@#$%^&*()\-_=+,./;:?'"<>\[\]{}|])/i;
@@ -24,9 +22,9 @@ const checkPasswd = (password = '') => {
 };
 
 /* register a user from fabric-process and db */
-const registerUser = async (body) => {
+async function registerUser(body) {
+  //console.log(body);
   const name = body.name;
-  //console.log(name.toString());
   const password = body.password;
   const email = body.email;
   const isPhone = body.key ? body.key : '';
@@ -49,32 +47,37 @@ const registerUser = async (body) => {
       msg = `user ${name} has been registered!`
     }
     else if(!isPhone) {
-      await fabric.register(name).then( async key => {
+      await fabric.register(name).then( async (response) => {
         //mysql保存用户name, password, email, privateKey;
-        let sqlArgs = [name, password, key, 'fbyter@qq.com'];
-        await db.insertOne(sqlArgs).then(flag => {
+        let key = response.key;
+        let sqlArgs = [name, password, key, email];
+        await db.insertOne(sqlArgs).then(sqlResult => {
           //这个print可以判定await的作用
-          //console.log(flag);
-          if(flag) {
+          //console.log(sqlResult);
+          if(sqlResult) {
             status = 'success';
             msg = `${status} to create user ${name}`;
           } else
             msg = `${status} to add user ${name} to DB`
         })
-      }, store => {
+      }, error => {
         msg = `${status} to storePubKey for ${name}`;
-        console.log('failed to store public key', store)
+        console.log('routes/register: ', error.msg)
+
       }).catch(err => {
-        msg = 'fabric-register function bug!';
-        console.log(msg, err);
+        msg = 'register db function bug!';
+        console.log(msg, ': ',err);
       });
 
     } else {
       //phone user
-      //let privateKey7 = isPhone;
-      let sqlArgs = [name, password, isPhone, 'fbyter@qq.com'];
-      db.insertOne(sqlArgs).then(sqlResult => {
-        msg = `${status} to create user ${name}`
+      let sqlArgs = [name, password, isPhone, email];
+      await db.insertOne(sqlArgs).then(sqlResult => {
+        if(sqlResult) {
+          status = 'success';
+          msg = `${status} to create user ${name}`;
+        } else
+          msg = `${status} to add user ${name} to DB`
       });
       //默认mysql操作没有问题, 不catch error
     }
@@ -82,7 +85,7 @@ const registerUser = async (body) => {
 
   return new Promise((resolve,reject) => resolve({ status: status, msg: msg }))
   //callback && callback({status: status, msg: msg});
-};
+}
 
 /* GET register msg. */
 router.post('/', function(req, res, next) {

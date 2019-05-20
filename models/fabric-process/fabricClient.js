@@ -24,7 +24,6 @@ let order = null;
 
 /* other parameters */
 let admin_user = null;
-let result = null;
 let tx_id = null;
 const store_path = path.join(rootPath, fabric_conf.store_path);
 const jsonPath = {path: store_path};
@@ -64,6 +63,7 @@ exports.initialization = () => {
         order = fabric_client.newPeer(getUrl(fabric_conf.order));
         channel.addPeer(peer);
         channel.addOrderer(order);
+
         //console.log(channel.getOrderers().toString());
         //console.log(channel.getPeers().toString())
 
@@ -82,35 +82,20 @@ exports.initialization = () => {
 exports.queryByChaincode = (fcn, args) => {
   let request = {
     chaincodeId: fabric_conf.chaincode_id,
-    //fcn: fcn,
-    fcn: "getPubKey",
-    //args: args
-    args: ['test']
+    fcn: fcn,
+    args: args
+    //fcn: "getPubKey",
+    //args: ['']
   };
 
-  // send the query proposal to the peer
-  return channel.queryByChaincode(request).then((query_responses) => {
+  //send the query proposal to the peer
+  return channel.queryByChaincode(request, true).then((query_responses) => {
     //typeof query_responses is object(json)
-    console.log("Query has completed, checking results");
+    //console.log("Query has completed, checking results!\n", typeof query_responses[0], query_responses[0]);
 
-    if(query_responses['code'] === "success") console.log("fuck");
-    else console.log("shit");
-    result = query_responses;
+    let result = query_responses;
+    return result
 
-    for(let key in result) {
-      console.log(result[key]);
-    }
-
-    /*if (query_responses && query_responses.length === 1) {
-      if (query_responses[0] instanceof Error) {
-        console.error("error from query = ", query_responses[0]);
-      } else {
-        console.log("Response is ", query_responses[0].toString());
-      }
-
-    } else {
-      console.log("No payloads were returned from query");
-    }*/
   }).catch(err => {
     console.log('query, error')
   })
@@ -187,7 +172,6 @@ function fuck(i) {
 
 //console.log('start:'+admin_user.getName());
 //exports.initialization();
-//exports.queryByChaincode();
 //exports.login = {}
 //exports.balance = {}
 //exports.high = {}

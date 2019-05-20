@@ -1,15 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const testRouter = require('./routes/test');
+const signupRouter = require('./routes/sign_up');
+const signinRouter = require('./routes/sign_in');
+const mainRouter = require('./routes/main');
+const payRouter = require('./routes/pay');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +30,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/test', testRouter);
+app.use('/signup', signupRouter);
+app.use('/signin', signinRouter);
+app.use('/main', mainRouter);
+app.use('/pay', payRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
