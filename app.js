@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const redis = require('redis');
+const redisStore = require('connect-redis')(session);
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -14,6 +17,7 @@ const signinRouter = require('./routes/sign_in');
 const mainRouter = require('./routes/main');
 const payRouter = require('./routes/pay');
 
+let redisClient = redis.createClient(6379, '127.0.0.1');
 let app = express();
 
 // view engine setup
@@ -25,6 +29,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: "clearlove7",
+  resave: true,
+  saveUninitialized:true,
+  store:new redisStore({client:redisClient})
+  //cookie:{secret:true}//这里设为true时，是https协议使用的
+  //注意在实验时这里的secret要设为false，因为本地用的是http协议
+}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -84,7 +84,6 @@ async function registerUser(body) {
   }
 
   return new Promise((resolve,reject) => resolve({ status: status, msg: msg }))
-  //callback && callback({status: status, msg: msg});
 }
 
 /* GET register msg. */

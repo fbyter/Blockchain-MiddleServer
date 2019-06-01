@@ -24,6 +24,12 @@ router.get('/', async function (req, res, next) {
         result = await request.post('balance', {name: name});
         break;
       case '4':
+        result = await request.get('blockAndTxList', '');
+        break;
+      case '5':
+        result = await request.get('transaction', name);
+        break;
+      case '6':
         fabric.post('balance', {name: name});
         break;
       default:

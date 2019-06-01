@@ -61,9 +61,14 @@ async function pay(body) {
 
 /* GET login msg. */
 router.post('/', function(req, res, next) {
-  pay(req.body).then( result => {
-    res.json(result)
-  });
+  const session = req.session;
+  if(session.login === true) {
+    pay(req.body).then(result => {
+      res.json(result)
+    });
+  } else {
+    res.redirect(`http://222.20.105.151:4396/signin?name=${name}`)
+  }
 });
 
 module.exports = router;

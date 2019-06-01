@@ -171,7 +171,7 @@ function fuck(i) {
 }
 
 //console.log('start:'+admin_user.getName());
-//exports.initialization();
+exports.initialization();
 //exports.login = {}
 //exports.balance = {}
 //exports.high = {}

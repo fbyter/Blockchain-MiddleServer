@@ -42,7 +42,12 @@ async function loginUser(body) {
 
 /* GET login msg. */
 router.post('/', function(req, res, next) {
+  const session = req.session;
   if((!req.body.name) && (!req.body.password)) res.redirect('https://www.google.com');
+  else if(session.login === true && session.username === req.body.name) {
+    let result = {status:'success', msg:'you have login'};
+    res.json(result);
+  }
   else loginUser(req.body).then( result => {
     if(result.status === 'success') {
       //登录成功, 设置cookie
@@ -55,9 +60,16 @@ router.post('/', function(req, res, next) {
         path: '/wallet'
       };
       //res.cookie("username", req.body.name, cookieParam)
+
+      //session
+      req.session.login = true;        //设置session
+      req.session.username = req.body.name;
+      req.session.cookie.expires=new Date(Date.now() + 600*1000);//设置超时时间,10min
     }
+
     res.json(result)
   });
+
 });
 
 module.exports = router;

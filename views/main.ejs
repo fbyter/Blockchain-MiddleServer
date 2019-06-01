@@ -19,11 +19,14 @@
             <li class="li_top">Marketplace</li>
             <li class="li_top"> Explore</li>
         </ul>
+
+        <!---
         <img id="img_sanjiao"  src="sanjiao.png"></img>
         <img id="img_game" class="img_top" src="game.png"></img>
         <img id="img_sanjiao"  src="sanjiao.png"></img>
         <img id="img_plus" class="img_top" src="plus.jpg"></img>
         <img id="img_ding" class="img_top" src="ding.png"></img>
+        --->
     </div>
 </div>
 <div id="div_headContainer">
@@ -34,13 +37,14 @@
         </p>
         <button id="button_coin" class="button">Coin</button>
         <button id="button_transfer" class="button">Transfer</button>
+        <button id="button_withdraw" class="button">Withdraw</button>
     </div>
 </div>
 <div id="div_bodyContainer">
     <div id="div_left">
         <div id="div_black">
-            <p id="p_black"><b><br>Workshops at GitHub Universe</b>
-                Register to attend a workshop in San Francisco on October 15
+            <p id="p_black"><br>BlockChain Wallet is being beta.
+                Welcome to use and send suggestions to us.
             </p>
         </div>
         <div id="div_white">
@@ -63,8 +67,17 @@
             <button id="button_refresh_blocks">Refresh</button>
         </div>
         <div id="div_mid_bottom">
-            <h3 id="h3_mid_bottom">Discover interesting projects and people to populate your personal news feed.</h3>
-            <p id="p_mid_bottom">Your news feed helps you keep up with recent activity on repositories you watch and people you follow.</p>
+            blockNum: <label id="blockNum">Null</label>;&nbsp&nbsp
+            choose: <input id="input_choose" placeholder="null"></input>&nbsp&nbsp
+            <button id="button_display_block" disabled="disabled">show</button>
+            <br>channelName: <label id="channelName">Null</label>
+            <br>dataHash: <label id="dataHash">Null</label>
+            <br>blockHash: <label id="blockHash">Null</label>
+            <br>preHash: <label id="preHash">Null</label>
+            <br>createDt: <label id="createDt">Null</label>
+            <br>txHash: <label id="txCount">Null</label>;&nbsp&nbsp<button id="button_display_txHash" disabled="disabled">show</button>
+            <select id="txHash_select">
+            </select>
         </div>
     </div>
 </div>
@@ -161,7 +174,40 @@
         </div>
     </form>
 
+    <form id="form_withdraw" class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">amount</label>
+            <div class="layui-input-block">
+                <input type="text" name="amount" required  lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">password</label>
+            <div class="layui-input-inline">
+                <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">payment</label>
+            <div class="layui-input-block">
+                <input type="radio" name="pay" value="wechat" title="微信">
+                <input type="radio" name="pay" value="alipay" title="支付宝" checked>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formWithdraw">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
     <p id="name"><%=name%></p>
+
+    <form id="form_txHash">
+        <pre id="songResJson"></pre>
+    </form>>
 </section>
 
 <script type="text/javascript" src="javascripts/main.js"></script>
