@@ -9,7 +9,7 @@ async function post(func, args) {
   let data = null;
   //console.log(func,args);
   switch (func) {
-    case 'register': case 'balance':
+    case 'register': case 'balance': case 'pubkey':
       data = {
         func: func,
         name: args.name
@@ -43,7 +43,7 @@ function get(func, args) {
   //console.log(func,args);
   switch (func) {
     case 'blockAndTxList':
-      url7 = (blockUrl + '/0?from=Sun%20May%2012%202019%2012:23:51%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&&to=Fri%20May%2031%202019%2012:23:51%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)')
+      url7 = (blockUrl + '/0?from=Sun%20May%2012%202019%2012:23:51%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)&&to=Sun%20Jun%2030%202019%2012:23:51%20GMT+0800%20(%E4%B8%AD%E5%9B%BD%E6%A0%87%E5%87%86%E6%97%B6%E9%97%B4)')
               .replace(/function/, func);
       break;
     case 'transaction':

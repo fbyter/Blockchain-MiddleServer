@@ -67,7 +67,12 @@ router.post('/', function(req, res, next) {
       res.json(result)
     });
   } else {
-    res.redirect(`http://222.20.105.151:4396/signin?name=${name}`)
+    let name, args = req.body;
+    if(args.flag === 1) //transfer
+      name = args.payer;
+    else //coin
+      name = args.owner;
+    res.redirect(`http://222.20.105.151:4396/signin?name=${name}`)//没啥用
   }
 });
 
